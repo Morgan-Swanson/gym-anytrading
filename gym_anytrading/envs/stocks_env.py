@@ -1,14 +1,16 @@
-import numpy as np
+# Modified by Morgan Swanson 06/05/2021
 
+import numpy as np
 from .trading_env import TradingEnv, Actions, Positions
 
 
 class StocksEnv(TradingEnv):
 
-    def __init__(self, df, window_size, frame_bound):
+    def __init__(self, df, window_size, frame_bound, diffs=True):
         assert len(frame_bound) == 2
 
         self.frame_bound = frame_bound
+        self.diffs = diffs
         super().__init__(df, window_size)
 
         self.trade_fee_bid_percent = 0.01  # unit
@@ -18,11 +20,11 @@ class StocksEnv(TradingEnv):
     def _process_data(self):
         prices = self.df.loc[:, 'Close'].to_numpy()
 
-        prices[self.frame_bound[0] - self.window_size]  # validate index (TODO: Improve validation)
         prices = prices[self.frame_bound[0]-self.window_size:self.frame_bound[1]]
-
-        diff = np.insert(np.diff(prices), 0, 0)
-        signal_features = np.column_stack((prices, diff))
+        signal_features = self.df.values
+        if self.diffs:
+            diff = np.insert(np.array(np.diff(self.df.values, axis=0)), 0, 0, axis=0)
+            signal_features = np.column_stack((self.df.values, diff))
 
         return prices, signal_features
 
