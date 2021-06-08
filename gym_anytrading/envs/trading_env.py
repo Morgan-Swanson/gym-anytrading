@@ -63,7 +63,7 @@ class TradingEnv(gym.Env):
         self._done = False
         
         # Select a new random df
-        self.df = self.df_list[np.random.randint(0, len(df_list))]
+        self.df = self.df_list[np.random.randint(0, len(self.df_list))]
         self.frame_bound = (self.window_size, len(self.df))
         self.prices, self.signal_features = self._process_data()
         self._end_tick = len(self.prices) - 1
