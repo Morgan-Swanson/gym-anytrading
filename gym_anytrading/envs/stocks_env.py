@@ -7,11 +7,12 @@ from .trading_env import TradingEnv, Actions, Positions
 class StocksEnv(TradingEnv):
 
     def __init__(self, df, window_size, frame_bound, diffs=True):
-        assert len(frame_bound) == 2
 
-        self.frame_bound = frame_bound
         self.diffs = diffs
         super().__init__(df, window_size)
+        
+        # Use the df to decide the frame bound
+        self.frame_bound = (self.window_size, len(self.df))
 
         self.trade_fee_bid_percent = 0.01  # unit
         self.trade_fee_ask_percent = 0.005  # unit
