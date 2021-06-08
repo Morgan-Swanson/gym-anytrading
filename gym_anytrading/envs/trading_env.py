@@ -23,11 +23,13 @@ class TradingEnv(gym.Env):
 
     metadata = {'render.modes': ['human']}
 
-    def __init__(self, df, window_size):
+    def __init__(self, df_list, window_size):
+        
         assert df.ndim == 2
 
         self.seed()
-        self.df = df
+        self.df_list = df_list
+        self.df = df_list[np.random.randint(0, len(df_list))]
         self.window_size = window_size
         self.prices, self.signal_features = self._process_data()
         self.shape = (window_size, self.signal_features.shape[1])
@@ -57,6 +59,12 @@ class TradingEnv(gym.Env):
 
     def reset(self):
         self._done = False
+        
+        # Select a new random df
+        self.df = df_list[np.random.randint(0, len(df_list))]
+        self.prices, self.signal_features = self._process_data()
+        self._end_tick = len(self.prices) - 1
+        
         self._current_tick = self._start_tick
         self._last_trade_tick = self._current_tick - 1
         self._position = Positions.Short
