@@ -19,7 +19,6 @@ register(
     entry_point='gym_anytrading.envs:StocksEnv',
     kwargs={
         'df': deepcopy(datasets.STOCKS_GOOGL),
-        'window_size': 30,
-        'frame_bound': (30, len(datasets.STOCKS_GOOGL))
+        'window_size': 30
     }
 )
