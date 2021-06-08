@@ -6,7 +6,7 @@ from .trading_env import TradingEnv, Actions, Positions
 
 class StocksEnv(TradingEnv):
 
-    def __init__(self, df, window_size, frame_bound, diffs=True):
+    def __init__(self, df, window_size, diffs=True):
 
         self.diffs = diffs
         super().__init__(df, window_size)
