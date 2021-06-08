@@ -31,6 +31,8 @@ class TradingEnv(gym.Env):
         self.df_list = df_list
         self.df = df_list[np.random.randint(0, len(df_list))]
         self.window_size = window_size
+        # Use the df to decide the frame bound
+        self.frame_bound = (self.window_size, len(self.df))
         self.prices, self.signal_features = self._process_data()
         self.shape = (window_size, self.signal_features.shape[1])
 
