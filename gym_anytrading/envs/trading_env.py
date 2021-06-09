@@ -73,7 +73,7 @@ class TradingEnv(gym.Env):
                 self.df_index = 0
             else:
                 self.df_index = self.df_index + 1
-            self.df = self.df_list[self.def_index]
+            self.df = self.df_list[self.df_index]
         self.frame_bound = (self.window_size, len(self.df))
         self.prices, self.signal_features = self._process_data()
         self._end_tick = len(self.prices) - 1
