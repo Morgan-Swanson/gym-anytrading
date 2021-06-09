@@ -6,10 +6,11 @@ from .trading_env import TradingEnv, Actions, Positions
 
 class StocksEnv(TradingEnv):
 
-    def __init__(self, df_list, window_size, diffs=True):
+    def __init__(self, df_list, window_size, diffs=True, random=True):
 
         self.diffs = diffs
-        super().__init__(df_list, window_size)
+        self.random = random
+        super().__init__(df_list, window_size, random)
 
         self.trade_fee_bid_percent = 0.01  # unit
         self.trade_fee_ask_percent = 0.005  # unit
