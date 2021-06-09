@@ -69,7 +69,10 @@ class TradingEnv(gym.Env):
             # Select a new random df
             self.df = self.df_list[np.random.randint(0, len(self.df_list))]
         else:
-            self.df_index = self.df_index + 1
+            if self.df_index >= len(self.df_list) - 1:
+                self.df_index = 0
+            else:
+                self.df_index = self.df_index + 1
             self.df = self.df_list[self.def_index]
         self.frame_bound = (self.window_size, len(self.df))
         self.prices, self.signal_features = self._process_data()
