@@ -23,7 +23,7 @@ class TradingEnv(gym.Env):
 
     metadata = {'render.modes': ['human']}
 
-    def __init__(self, df_list, window_size):
+    def __init__(self, df_list, window_size, random):
         
 
 
